@@ -7,7 +7,7 @@ class SymptomChecker:
     def __init__(self, symptoms):
         self.symptoms = symptoms
 
-    def predict_disease(self):
+    async def predict_disease(self):
         # Load the disease dataset
         diseases = pd.read_csv("diseases.csv")
 
