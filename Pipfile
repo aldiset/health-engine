@@ -9,6 +9,7 @@ pandasai = "*"
 uvicorn = "*"
 pydantic = "*"
 openai = "*"
+pymongo = "*"
 
 [dev-packages]
 

@@ -3,6 +3,8 @@
 
 Health Engine is a software system that combines artificial intelligence (AI) techniques, specifically leveraging the capabilities of Pandas AI, with health-related data to provide various functionalities aimed at improving individual health and well-being.
 
+![Flow](image/ac4cc8bc-9692-44ea-83a1-536a9c318326.jfif)
+
 ## Features
 
 The Health Engine incorporates the following key features:
