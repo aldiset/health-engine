@@ -1,15 +1,23 @@
-import pandas as pd
-from pandasai import PandasAI
-from pandasai.llm.openai import OpenAI
+import openai
+from typing import List
+from fastapi.encoders import jsonable_encoder
 
 from app.config.config import OPENAI_API_TOKEN
+from app.schema.chat import SchemaChats, SchemaChatResponse
 
-class HealthEngine:
-    def __init__(self, dataframe: pd.DataFrame):
+class ChatGPT:
+    def __init__(self, chats: List(SchemaChats), model: str = "gpt-3.5-turbo"):
+        self.chats = chats
+        self.model = model
         self.api_token = OPENAI_API_TOKEN
-        self.llm = OpenAI(api_token=self.api_token)
-        self.pandas_ai = PandasAI(self.llm, conversational=False)
-        self.dataframe = dataframe
 
-    async def run(self,prompt: str):
-        return self.pandas_ai(self.dataframe, prompt)
+    async def run(self):
+        response = openai.ChatCompletion.create(
+            model=self.model,  # Change the model to match your needs
+            messages=jsonable_encoder(self.chats)
+        )
+        return SchemaChatResponse(
+            message_id=response.get("id"),
+            role=response.get("choices")[0].get("message").get("role"),
+            content=response.get("choices")[0].get("message").get("content")
+        )

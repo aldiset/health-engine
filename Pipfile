@@ -5,13 +5,11 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
-pandasai = "*"
-uvicorn = "*"
 pydantic = "*"
-openai = "*"
 pymongo = "*"
+openai = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "*"
+python_version = "3.8"
