@@ -10,7 +10,7 @@ class CRUD:
         return self.db.query(self.model).get(id)
     
     async def get_all(self, *args, limit: int = None, offset: int = None):
-        return self.db.query(self.model).filter(*args).limit(limit).offset(offset)
+        return self.db.query(self.model).filter(*args).order_by(self.model.created_at.desc()).limit(limit).offset(offset).all()
     
     async def create(self, obj_in):
         obj = self.model(**obj_in)
