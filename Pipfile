@@ -8,6 +8,11 @@ fastapi = "*"
 pydantic = "*"
 pymongo = "*"
 openai = "*"
+sqlmodel = "*"
+psycopg2 = "*"
+uvicorn = "*"
+psycopg2-binary = "*"
+alembic = "*"
 
 [dev-packages]
 

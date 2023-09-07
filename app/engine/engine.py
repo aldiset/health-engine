@@ -6,7 +6,7 @@ from app.config.config import OPENAI_API_TOKEN
 from app.schema.chat import SchemaChats, SchemaChatResponse
 
 class ChatGPT:
-    def __init__(self, chats: List(SchemaChats), model: str = "gpt-3.5-turbo"):
+    def __init__(self, chats: List[SchemaChats], model: str = "gpt-3.5-turbo"):
         self.chats = chats
         self.model = model
         self.api_token = OPENAI_API_TOKEN

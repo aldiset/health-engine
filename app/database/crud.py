@@ -1,28 +1,32 @@
-from pymongo import MongoClient
+from sqlalchemy.orm import Session
 
-from app.config.config import CONNECTION_MONGO
 
-class MongoDB:
-    def __init__(self, database_name):
-        self.client = MongoClient(CONNECTION_MONGO)
-        self.db = self.client[database_name]
+class CRUD:
+    def __init__(self, db: Session, model):
+        self.db = db
+        self.model = model
     
-    def create(self, collection_name, document):
-        collection = self.db[collection_name]
-        result = collection.insert_one(document)
-        return result.inserted_id
+    async def get(self, id):
+        return self.db.query(self.model).get(id)
     
-    def read(self, collection_name, query):
-        collection = self.db[collection_name]
-        document = collection.find_one(query)
-        return document
+    async def get_all(self, *args, limit: int = None, offset: int = None):
+        return self.db.query(self.model).filter(*args).limit(limit).offset(offset)
     
-    def update(self, collection_name, query, update_data):
-        collection = self.db[collection_name]
-        result = collection.update_one(query, {"$set": update_data})
-        return result.modified_count
+    async def create(self, obj_in):
+        obj = self.model(**obj_in)
+        self.db.add(obj)
+        self.db.commit()
+        self.db.refresh(obj)
+        return obj
     
-    def delete(self, collection_name, query):
-        collection = self.db[collection_name]
-        result = collection.delete_one(query)
-        return result.deleted_count
+    async def update(self, obj, obj_in):
+        for attr, value in obj_in.items():
+            setattr(obj, attr, value)
+        self.db.commit()
+        self.db.refresh(obj)
+        return obj
+    
+    async def delete(self, obj):
+        self.db.delete(obj)
+        self.db.commit()
+        return obj

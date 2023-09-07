@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 from app.config.config import TITLE, DESCRIPTION
-from app.router import assesment, checker, analysis
+from app.router import chat
 
 app = FastAPI(
         debug=True, 
@@ -13,8 +13,6 @@ app = FastAPI(
 async def index():
     return "Welcome in Health Engine"
 
-app.include_router(assesment)
-app.include_router(checker)
-app.include_router(analysis)
+app.include_router(chat)
 if __name__ == "__main__":
     uvicorn.run(app)
