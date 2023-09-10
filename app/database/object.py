@@ -1,3 +1,4 @@
+import uuid
 from app.database.crud import CRUD
 from app.database.connect import session
 
@@ -12,6 +13,7 @@ class Object:
         return await self.crud.get_all(*filter, limit=limit, offset=offset)
     
     async def create(self, data: dict):
+        data["id"] = str(uuid.uuid4())
         return await self.crud.create(obj_in=data)
     
     async def update(self, id, obj_in):
