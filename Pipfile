@@ -13,6 +13,7 @@ psycopg2 = "*"
 uvicorn = "*"
 psycopg2-binary = "*"
 alembic = "*"
+loguru = "*"
 
 [dev-packages]
 
