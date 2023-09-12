@@ -51,7 +51,16 @@ class AIResult(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, onupdate=datetime.utcnow)
     deleted_at = Column(DateTime)
-    
+
+
+class PreventionData(Base):
+    __tablename__= 'prevention'
+    id= Column(String, primary_key=True, default=str(uuid.uuid4()))
+    ai_result_id = Column(String)
+    data = Column(JSON)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, onupdate=datetime.utcnow)
+    deleted_at = Column(DateTime)
 
 class CheckUpHistory(Base):
     __tablename__ = 'checkup_history'
