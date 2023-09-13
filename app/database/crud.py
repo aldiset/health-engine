@@ -30,3 +30,6 @@ class CRUD:
         self.db.delete(obj)
         self.db.commit()
         return obj
+    
+    async def get_one_by_filter(self, *args):
+        return self.db.query(self.model).filter(*args).first()

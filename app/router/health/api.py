@@ -5,8 +5,8 @@ from fastapi import HTTPException, APIRouter, status
 
 from app.engine.engine import ChatGPT
 from app.database.object import Object
-from app.utils.random_color import random_color
 from app.utils.get_json import get_json_from_string
+from app.utils.group_by import group_data_by_created_at
 from app.models.models import HealthData, CheckUpHistory, AIResult, PreventionData
 from app.schema.health import HealthCreateSchemaBulk, CheckUpCreateSchemaBulk
 
@@ -31,6 +31,7 @@ async def get_user_detail(user_id: str):
     data.append({"disease": jsonable_encoder(diseases)})
     data.append({"check_up_history": jsonable_encoder(checkup_history)})
 
+    success_response["data"]= jsonable_encoder(group_data_by_created_at(data))
     return JSONResponse(content=success_response, status_code=status.HTTP_200_OK)
 
 
@@ -97,7 +98,6 @@ async def get_prevention_by_ai_result(ai_result_id: str):
 async def create_health_bulk(datas: HealthCreateSchemaBulk):
     for data in datas.data:
         data_dict = jsonable_encoder(data)
-        data_dict["color"] = random_color()
         await health_object.create(data_dict)
     
     return JSONResponse(content=success_response, status_code=status.HTTP_200_OK)
