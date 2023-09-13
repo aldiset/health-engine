@@ -47,7 +47,7 @@ async def get_user_prediction(user_id: str):
     chatgpt_prompt = (
         f"Tuliskan Json List yang berisi prediksi penyakit berdasarkan data {data} "
         "Tulisakan ke dalam List Json "
-        "[{\"nama_penyakit\":\"value\",\"gejala\":\"value\",\"deskripsi\":\"value\"}]"
+        "{\"presentase_kesehatan\":0-100(in persen by detail penyakit)},\"detail\":[{\"nama_penyakit\":\"value\",\"gejala\":\"value\",\"deskripsi\":\"value\"}]"
     )
 
     chatgpt = ChatGPT(model="text-davinci-003", prompt=chatgpt_prompt)
@@ -58,7 +58,7 @@ async def get_user_prediction(user_id: str):
         result_json = get_json_from_string(result)
         if isinstance(result_json, list):
             ai_result = await airesult_object.create({"user_id": user_id, "data": result_json})
-            success_response["data"] = {"ai_result_id": ai_result.id, "prediction": ai_result.data}
+            success_response["data"] = {"ai_result_id": ai_result.id, "prediksi": ai_result.data}
         else:
             print(result)
 
